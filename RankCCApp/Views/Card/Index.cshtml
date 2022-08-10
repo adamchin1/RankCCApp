@@ -1,0 +1,53 @@
+﻿@model RankCCApp.ViewModels.CardProviderViewModel
+
+@{
+    ViewData["Title"] = "Cards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Capture Credit Card</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Card Number
+            </th>
+            <th>
+                Provider
+            </th>
+            <th>             
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Cards) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provider.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", item)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@if (Model.Cards.Count() == 0)
+{
+    <p>There are currently no cards captured.</p>
+}
+@using (Html.BeginForm("Save", "Card"))
+{
+    @Html.TextBox("input","")
+    <input type="submit"  value="Add"/>
+}
+
+@if (@TempData["ErrorMessage"] != null)
+{
+    <p style="color:red">@TempData["ErrorMessage"]</p>
+}
